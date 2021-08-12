@@ -10,13 +10,16 @@ export const DatePickers = styled(({...props})=>(
     Yaligment="center"
     customPadding="5px"
     >
-    <CustomLabel>date picker</CustomLabel>
+    <CustomLabel>{props?.inputId.replaceAll("_", " ")}</CustomLabel>
     <TextField 
     {...props}
     id={props.inputId}
     type="date"
     variant="outlined"
-    defaultValue="2017-05-24"
+    value={props.Formik?.values[props.inputId]}
+    onChange={props.Formik?.handleChange}
+    error={props.Formik?.touched[props.inputId] && Boolean(props.Formik?.errors[props.inputId])}
+    helperText={props.Formik?.touched[props.inputId] && props.Formik?.errors[props.inputId]}
     />
     </Wrapper>
 ))`

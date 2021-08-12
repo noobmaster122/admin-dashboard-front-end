@@ -30,7 +30,7 @@ export const CustomAutoComplete = styled(({...props})=>(
     Yaligment="center"
     customPadding="5px"
     >
-    <CustomLabel>{props.inputId}</CustomLabel>
+    <CustomLabel>{props?.inputId.replaceAll("_", " ")}</CustomLabel>
     <Autocomplete
     {...props}
       id={props.inputId}
@@ -39,8 +39,8 @@ export const CustomAutoComplete = styled(({...props})=>(
       renderInput={(params) => <TextField {...params} variant="outlined"
       value={props.Formik?.values[props.inputId]}
       onChange={props.Formik?.handleChange}
-      error={props.Formik?.touched.password && Boolean(props.Formik?.errors.password)}
-      helperText={props.Formik?.touched.password && props.Formik?.errors.password}
+      error={props.Formik?.touched[props.inputId] && Boolean(props.Formik?.errors[props.inputId])}
+      helperText={props.Formik?.touched[props.inputId] && props.Formik?.errors[props.inputId]}
       />}
     />
     </Wrapper>
