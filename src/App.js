@@ -2,21 +2,54 @@ import { useReducer, useContext } from 'react';
 import {Store} from './store';
 import {reducer, initialState} from './storeReducer'
 import WithMaterialUI from './components/Form'
+import StyledComponents from './components/styled.textfield'
+import MenuToggler from './components/styled.btn.grp'
+import {DatePickers} from './components/date.picker'
+import {Btn} from './components/custom.btn'
 import logo from './logo.svg';
-import {SignupForm} from './tst2.js';
-import {Formik} from './formik.example'
 import './App.css';
+//components
+import {Wrapper} from './components/wrapper.div'
+import tst from './tst'
+
+
+
 
 function App() {
   const [state, dispatch]= useReducer(reducer, initialState);
+  ;(()=>{
+    console.log("###")
+    tst()
+    .then((x)=>{
+      console.log(x)
+      console.log(typeof x)
+    })
+    .catch(e => console.log(e))
+
+  })();
+
   return (
-    <div className="App">
-      {/* <SignupForm /> */}
+    <Wrapper 
+    fullHeight="100vh"
+     pgColor="linear-gradient(#f5f5f5 40%, #21094E 40%)"
+     Yaligment="center"
+     tpPadding="100px"
+     >
+
       <Store.Provider value={{state, dispatch}}>
-        <SignupForm Frk="farouk"/>
+        <MenuToggler />
+        <Wrapper 
+        pgClr= "#eeeeee"
+        bxShadow="rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"
+        brRad="5px"
+        customPadding="20px"
+        customWidth="400px">
+
         <WithMaterialUI />
+         </Wrapper>
       </Store.Provider>
-    </div>
+     
+    </Wrapper>
   );
 }
 
