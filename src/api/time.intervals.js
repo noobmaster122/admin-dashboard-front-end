@@ -1,4 +1,3 @@
-
 export const timeIntervalsArr = () => {
     let intervalArr = []
     for(let x=8; x<16; x++){
@@ -14,6 +13,5 @@ export const timeIntervalsArr = () => {
             intervalArr.push(`${formatedX}:${formatedY}`)
         }
     }
-    let unique = [...new Set(intervalArr)]; 
-    return unique;
+   return [...new Set(intervalArr)]; 
 }

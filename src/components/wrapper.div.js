@@ -7,10 +7,11 @@ export const Wrapper = styled.div`
     flex-direction: column;
     padding: ${props => props.customPadding};
     padding-top: ${props => props.tpPadding};
+    padding-bottom: ${props => props.pbtPadding};
     border-radius: ${props => props.brRad};
     box-shadow: ${props => props.bxShadow};
     background-color: ${props => props.pgClr};
     height: ${props => props.fullHeight};
     background: ${props => props.pgColor};
-    width: ${props => props.customWidth}
+    width: ${props => props.customWidth};
 `;

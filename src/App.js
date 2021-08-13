@@ -17,23 +17,14 @@ import tst from './tst'
 
 function App() {
   const [state, dispatch]= useReducer(reducer, initialState);
-  ;(()=>{
-    console.log("###")
-    tst()
-    .then((x)=>{
-      console.log(x)
-      console.log(typeof x)
-    })
-    .catch(e => console.log(e))
-
-  })();
 
   return (
     <Wrapper 
-    fullHeight="100vh"
+    
      pgColor="linear-gradient(#f5f5f5 40%, #21094E 40%)"
      Yaligment="center"
      tpPadding="100px"
+     pbtPadding="200px"
      >
 
       <Store.Provider value={{state, dispatch}}>
@@ -42,8 +33,8 @@ function App() {
         pgClr= "#eeeeee"
         bxShadow="rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"
         brRad="5px"
-        customPadding="20px"
-        customWidth="400px">
+        customPadding="15px"
+        customWidth="325px">
 
         <WithMaterialUI />
          </Wrapper>

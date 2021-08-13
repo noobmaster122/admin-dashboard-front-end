@@ -9,18 +9,17 @@ export const StyledTextField = styled(({...props})=>(
     <Wrapper 
     Yaligment="center"
     customPadding="5px">
-    <CustomLabel>{props.inputId}</CustomLabel>
+    <CustomLabel>{props.inputId?.replaceAll("_", " ")}</CustomLabel>
     <TextField 
        {...props} 
        fullWidth
        id={props.inputId}
        name={props.inputId}
-       type={props.inputId === 'password' ? 'password' : 'text'}
        variant="outlined"
-       value={props.Formik?.values[props.inputId]}
-       onChange={props.Formik?.handleChange}
-       error={props.Formik?.touched[props.inputId] && Boolean(props.Formik?.errors[props.inputId])}
-       helperText={props.Formik?.touched[props.inputId] && props.Formik?.errors[props.inputId]}
+       onChange={props.formikhelper?.handleChange}
+       value={props.formikhelper.values[props.inputId]}
+    //    errorhandler={props.formikhelper.touched[props.inputId] && Boolean(props.formikhelper.errors[props.inputId])}
+       helperText={props.formikhelper.touched[props.inputId] && props.formikhelper.errors[props.inputId]}
     />
     </Wrapper>
 ))`

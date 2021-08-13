@@ -16,10 +16,10 @@ export const DatePickers = styled(({...props})=>(
     id={props.inputId}
     type="date"
     variant="outlined"
-    value={props.Formik?.values[props.inputId]}
-    onChange={props.Formik?.handleChange}
-    error={props.Formik?.touched[props.inputId] && Boolean(props.Formik?.errors[props.inputId])}
-    helperText={props.Formik?.touched[props.inputId] && props.Formik?.errors[props.inputId]}
+    onChange={props.formikhelper?.handleChange}
+    value={props.formikhelper.values[props.inputId]}
+    // errorhandler={props.formikhelper.touched[props.inputId] && Boolean(props.formikhelper.errors[props.inputId])}
+    helperText={props.formikhelper.touched[props.inputId] && props.formikhelper.errors[props.inputId]}
     />
     </Wrapper>
 ))`
