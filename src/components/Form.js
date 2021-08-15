@@ -9,6 +9,7 @@ import Axios from 'axios'
 import {timeIntervalsArr} from '../api/time.intervals'
 import { Formik, Form } from "formik";
 import {CustomTitle} from "./custom.title"
+import {setApplication, isReservationDateOpen} from "../api/clientApi"
 
 
 const Schema = yup.object({
@@ -25,7 +26,7 @@ const Schema = yup.object({
   .string("Enter phone number")
   .required("field is required")
   .test('len', 'phone number must have 10 digits', function(val){ return !!val ? val.length === 10 : false; })
-  .test('Digits only', 'The field should have digits only', function(value){ /^\d+$/.test(value)}),
+  .test('Digits only', 'The field should have digits only', function(value){ return /^\d+$/.test(value)}),
   date_naissance: yup
   .string("Enter birthday date")
   .required("field is required")
@@ -36,26 +37,20 @@ const Schema = yup.object({
   .test('len', 'date format error', function(val){ return !!val ? val.length === 10 : false; }),
   heure_rendez_vous : yup
   .string("enter time")
-  .required("field is required"),
-  // .test(s
-  //   'validdate',
-  //   'date been already chosen by another client',
-  //   function(){
-  //     return new Promise(async(resolve)=>{
-  //       let d = JSON.stringify(this.options.parent.date_rendez_vous)
-  //       let t = JSON.stringify(this.options.parent.heure_rendez_vous)
-  //         Axios.get(`http://localhost:5001/api/v1/client/is-date-open?date=${d}&time=${t}`)
-  //         .then(res => {
-  //           if(res.data.length > 0) resolve(false);
-  //           resolve(true);
-  //         })
-  //         .catch(e =>{
-  //           console.log(e)
-  //           resolve(true)
-  //         })
-  //     })
-  //   }
-  // ),
+  .required("field is required")
+  .test('validdate',
+    'date been already chosen by another client',
+    function(){
+      return new Promise(async(resolve)=>{
+        let d = JSON.stringify(this.options.parent.date_rendez_vous)
+        let t = JSON.stringify(this.options.parent.heure_rendez_vous)
+        if(!!d && !!t){
+          let x = await isReservationDateOpen(d, t);
+          resolve(x)
+        }
+      })
+    }
+  ),
   type_passport: yup
   .string("Enter passport type")
   .required("field is required"),
@@ -82,8 +77,17 @@ const Schema = yup.object({
 const WithMaterialUI = () => {
 const {state, dispatch} = useContext(Store);
 
-const submitForm = (values) =>{
+const submitForm = async(values, actions) =>{
+  // collect data
+  // do api call
+  console.log(actions)
   alert(JSON.stringify(values, null, 2));
+  console.log(await setApplication(values));
+  actions.setSubmitting(false);
+  // // reset form
+  // actions.resetForm({
+  //   values: {...initialValues}
+  // });
 }
 
 const initialValues = {
@@ -112,7 +116,9 @@ const initialValues = {
       {(formik) => {
         const {
           values,
-          setFieldValue
+          setFieldValue,
+          dirty,
+          isSubmitting
         } = formik;
         return(
             <Form>
@@ -206,7 +212,9 @@ const initialValues = {
               formikhelper={formik}
               />
               <Btn
-              variant="contained" color="primary" type="submit">
+              variant="contained" color="primary" type="submit" disabled={!dirty}
+              disabled={isSubmitting}
+              >
                 submit
               </Btn>
             </Form>
