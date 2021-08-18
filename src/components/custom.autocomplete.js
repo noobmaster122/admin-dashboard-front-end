@@ -5,13 +5,14 @@ import {Wrapper} from './wrapper.div'
 import {CustomLabel} from "./input.label"
 import styled from "styled-components";
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import {fieldKeyFormater} from "../api/keys.formatter"
 
 export const CustomAutoComplete = styled(({...props})=>(
     <Wrapper
     Yaligment="center"
     customPadding="5px"
     >
-    <CustomLabel>{props?.inputId.replaceAll("_", " ")}</CustomLabel>
+    <CustomLabel>{fieldKeyFormater(props?.inputId)}</CustomLabel>
     <Autocomplete
     {...props}
       id={props.inputId}

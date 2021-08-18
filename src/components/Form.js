@@ -74,7 +74,7 @@ const Schema = yup.object({
 });
 
 
-const WithMaterialUI = () => {
+const AddApplicationForm = () => {
 const {state, dispatch} = useContext(Store);
 
 const submitForm = async(values, actions) =>{
@@ -225,4 +225,4 @@ const initialValues = {
   );
 };
 
-export default WithMaterialUI;
+export default AddApplicationForm;

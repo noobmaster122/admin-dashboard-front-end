@@ -8,4 +8,5 @@ export const CustomLabel = styled(({children, ...props})=>(
     </label>
 ))`
    padding-bottom: 5px;
+   text-align : center;
 `;

@@ -51,7 +51,7 @@ export const MenuWrapper = styled(({children, ...props})=>(
     height: 100px;
 `;
 
-export default function MenuToggler() {
+export default function MenuToggler(props) {
 
   const [currItem, setCurrItem] = React.useState('');
   const [open, setOpen] = React.useState(false);
@@ -62,7 +62,7 @@ export default function MenuToggler() {
 
   const handleChange = (event) => {
     setCurrItem(event.target.value);
-    console.log(event.target.value)
+    props.handleItemChange(event.target.value)
   };
 
   const handleClose = () => {
@@ -88,7 +88,6 @@ export default function MenuToggler() {
           value={currItem}
           onChange={handleChange}
           style={{
-              border: '1px solid green',
               visibility: "hidden"
           }}
         >

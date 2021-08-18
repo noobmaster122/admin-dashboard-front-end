@@ -32,3 +32,35 @@ export const isReservationDateOpen = (d, t) => {
         }
     })
 }
+
+export const getClients = () => {
+    return new Promise((resolve)=>{
+        try{
+            Axios.get(`http://localhost:5001/api/v1/client/`)
+            .then(res => {
+              resolve(res.data);
+            })
+            .catch(e =>{
+              resolve(false)
+            })
+        }catch(e){
+
+        }
+    })
+}
+
+export const getClientsByStatus = (x) => {
+    return new Promise((resolve)=>{
+        try{
+            Axios.get(`http://localhost:5001/api/v1/client/data?status="${x}"`)
+            .then(res => {
+              resolve(res.data);
+            })
+            .catch(e =>{
+              resolve(false)
+            })
+        }catch(e){
+
+        }
+    })
+}

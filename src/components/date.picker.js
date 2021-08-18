@@ -4,13 +4,14 @@ import TextField from '@material-ui/core/TextField';
 import {Wrapper} from './wrapper.div'
 import {CustomLabel} from "./input.label"
 import styled from "styled-components";
+import {fieldKeyFormater} from "../api/keys.formatter"
 
 export const DatePickers = styled(({...props})=>(
     <Wrapper
     Yaligment="center"
     customPadding="5px"
     >
-    <CustomLabel>{props?.inputId.replaceAll("_", " ")}</CustomLabel>
+    <CustomLabel>{fieldKeyFormater(props?.inputId)}</CustomLabel>
     <TextField 
     {...props}
     id={props.inputId}
