@@ -18,7 +18,7 @@ export const Btn = styled(({children, ...props})=>(
     max-width: 300px;
     color: whitesmoke !important;
   background-color: #511281 !important;  
-}
+
 `;
 
 

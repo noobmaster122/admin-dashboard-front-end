@@ -1,7 +1,7 @@
 import React, { useReducer,useEffect,  useContext, useState } from 'react';
 import {Store} from './store';
 import {reducer, initialState} from './storeReducer'
-import AddApplicationForm from './components/Form'
+import ApplicationForm from './components/Form'
 import StyledComponents from './components/styled.textfield'
 import MenuToggler from './components/styled.btn.grp'
 import {DatePickers} from './components/date.picker'
@@ -13,6 +13,7 @@ import {Wrapper} from './components/wrapper.div'
 import {SimpleBackdrop} from './components/custom.backdrop'
 import ClientData from "./components/custom.table"
 import {getClientsByStatus} from "./api/clientApi"
+import {ModifyDelete} from "./screens/modify.delete"
 import tst from './tst'
 
 const waitFor = (delay) => new Promise(resolve => setTimeout(resolve, delay))
@@ -59,10 +60,10 @@ function App() {
           ((x)=>{
             switch(x){
               case "Add":
-                return (<AddApplicationForm />)
+                return (<ApplicationForm />)
               break;
               case "Modify":
-                return (<> </>);
+                return (<ModifyDelete />);
               break;
               case "Delete":
                 return (<> </>);
@@ -74,7 +75,7 @@ function App() {
                 return (<ClientData dataTitle="pending" objArr={dataTable}/>);
               break;
               default:
-                return (<AddApplicationForm />);
+                return (<ApplicationForm />);
               break;
             }
           })(activeComponent)

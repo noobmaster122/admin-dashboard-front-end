@@ -11,7 +11,7 @@ export const setApplication = (obj) => {
             resolve(res)})
             .catch(e => reject(e))
         }catch(err){
-            reject(err)
+            resolve(false)
         }
     })
 }
@@ -28,7 +28,7 @@ export const isReservationDateOpen = (d, t) => {
               resolve(false)
             })
         }catch(e){
-
+            resolve(false)
         }
     })
 }
@@ -44,7 +44,7 @@ export const getClients = () => {
               resolve(false)
             })
         }catch(e){
-
+            resolve(false)
         }
     })
 }
@@ -60,7 +60,41 @@ export const getClientsByStatus = (x) => {
               resolve(false)
             })
         }catch(e){
+            resolve(false)
+        }
+    })
+}
 
+export const getClientsIdNom = (option) => {
+    return new Promise((resolve)=>{
+        try{
+            Axios.get(`http://localhost:5001/api/v1/client/data?option="${option}"`)
+            .then(res => {
+              resolve(res.data);
+            })
+            .catch(e =>{
+              resolve(false)
+            })
+        }catch(e){
+            resolve(false)
+        }
+    })
+}
+
+export const getClientByIdNom = (obj) => {
+    return new Promise((resolve)=>{
+        try{
+            Axios.post(`http://localhost:5001/api/v1/client/data`,{
+                ...obj
+            })
+            .then(res => {
+              resolve(res.data);
+            })
+            .catch(e =>{
+              resolve(false)
+            })
+        }catch(e){
+            resolve(false)
         }
     })
 }
