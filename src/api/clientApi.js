@@ -98,3 +98,21 @@ export const getClientByIdNom = (obj) => {
         }
     })
 }
+
+export const ModifyClientById = (id, obj) => {
+    return new Promise((resolve)=>{
+        try{
+            Axios.post(`http://localhost:5001/api/v1/client/${id}`,{
+                ...obj
+            })
+            .then(res => {
+              resolve(res.data);
+            })
+            .catch(e =>{
+              resolve(false)
+            })
+        }catch(e){
+            resolve(false)
+        }
+    });
+}

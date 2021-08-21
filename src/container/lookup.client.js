@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import styled from "styled-components";
@@ -10,6 +10,7 @@ import {Btn} from "../components/custom.btn"
 import {CustomAutoComplete} from "../components/custom.autocomplete"
 import {CustomTitle} from "../components/custom.title"
 import {getClientsIdNom, getClientByIdNom} from "../api/clientApi"
+import {Store} from "../store"
 
 const Schema = yup.object({
     id_nom_client: yup
@@ -20,13 +21,18 @@ const Schema = yup.object({
 export const SearchBlock = ({...props})=>{
 
     const [selectOtions, setSelectOptions] = useState(["filler", "filler"])
+    const {state, dispatch} = useContext(Store);
 
     const submitHandler = async(values) => {
         console.log(values)
         alert(JSON.stringify(values, undefined, 2))
         let x = await getClientByIdNom(values)
-        console.log(x)
-
+        if(x.length > 0){
+            let y = x[0].id;
+            delete x[0].id;
+            dispatch({type: 'SAVECLIENTDATA', PAYLOAD: {id: y, data: x[0]}})
+        }
+        dispatch({type: 'UPDATEUI'});
     }
 
     const initialValues = {

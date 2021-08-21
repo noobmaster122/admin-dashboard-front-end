@@ -14,9 +14,9 @@ import {SimpleBackdrop} from './components/custom.backdrop'
 import ClientData from "./components/custom.table"
 import {getClientsByStatus} from "./api/clientApi"
 import {ModifyDelete} from "./screens/modify.delete"
+import {waitFor} from "./api/delay"
 import tst from './tst'
 
-const waitFor = (delay) => new Promise(resolve => setTimeout(resolve, delay))
 function App() {
   const [state, dispatch]= useReducer(reducer, initialState);
   const [activeComponent, setActiveComponent]= useState("Add");
@@ -60,10 +60,10 @@ function App() {
           ((x)=>{
             switch(x){
               case "Add":
-                return (<ApplicationForm />)
+                return (<ApplicationForm screen={x}/>)
               break;
               case "Modify":
-                return (<ModifyDelete />);
+                return (<ModifyDelete screen={x}/>);
               break;
               case "Delete":
                 return (<> </>);

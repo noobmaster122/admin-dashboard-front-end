@@ -9,32 +9,48 @@ import Axios from 'axios'
 import {timeIntervalsArr} from '../api/time.intervals'
 import { Formik, Form } from "formik";
 import {CustomTitle} from "./custom.title"
-import {setApplication, isReservationDateOpen} from "../api/clientApi"
+import {setApplication, isReservationDateOpen, ModifyClientById} from "../api/clientApi"
 import {Schema} from "../api/yup.schema"
 
-
-const AddApplicationForm = () => {
+const ApplicationForm = (props) => {
 const {state, dispatch} = useContext(Store);
-useEffect(() => {
-  console.log(state)
-}, []);
-
+let initState = {
+  ...state.client.data
+}
 const submitForm = async(values, actions) =>{
-  // collect data
-  // do api call
-  dispatch({type: 'SAVECLIENTDATA', PAYLOAD: values})
   console.log(actions)
   alert(JSON.stringify(values, null, 2));
-  console.log(await setApplication(values));
+  // conditional query
+  // if modify screen , update
+  if(props.screen === 'Modify'){
+    console.log(await ModifyClientById(state.client.id, values))
+    // move back to previous component in modify screen
+    dispatch({type:'UPDATEUI'})
+  }else if(props.screen === 'Add'){
+    // add client application
+    console.log(await setApplication(values));
+  }
   actions.setSubmitting(false);
-  // // reset form
-  // actions.resetForm({
-  //   values: {...initialValues}
-  // });
-}
-
-let initState = {
-  ...state.client
+  // reset client fields
+  dispatch({type: 'CLEARFIELDS'});
+  // reset form
+  actions.resetForm({
+    values: {
+    nationalite: 'Algerian',
+    nom_de_famille: '',
+    prenom:'',
+    nmr_tlf:'',
+    date_naissance: '',
+    heure_rendez_vous: '',
+    date_rendez_vous: '',
+    type_passport: '',
+    nmr_passport: '',
+    date_emission: '',
+    date_expiration: '',
+    lieu_passport: '',
+    type_visa: ''
+  }
+  });
 }
 
   return (
@@ -51,6 +67,7 @@ let initState = {
           dirty,
           isSubmitting
         } = formik;
+        console.log("am inside teh formik comp ", values)
         return(
             <Form>
               <CustomTitle>
@@ -88,10 +105,11 @@ let initState = {
               <CustomAutoComplete 
               inputId="heure_rendez_vous"
               inputOptions={timeIntervalsArr()}
+              value={values["heure_rendez_vous"]}
               onChange={(e, value) => {
                 setFieldValue(
                   "heure_rendez_vous",
-                  value !== null ? `${value}` : `${values["heure_rendez_vous"]}`
+                  value !== null ? value : values["heure_rendez_vous"]
                 );
               }}
               formikhelper={formik}
@@ -99,10 +117,11 @@ let initState = {
               <CustomAutoComplete 
               inputId="type_passport"
               inputOptions={["Normal", "Commecial"]}
+              value={values["type_passport"]}
               onChange={(e, value) => {
                 setFieldValue(
                   "type_passport",
-                  value !== null ? `${value}` : `${values["type_passport"]}`
+                  value !== null ? value : values["type_passport"]
                 );
               }}
               formikhelper={formik}
@@ -123,21 +142,23 @@ let initState = {
               <CustomAutoComplete 
               inputId="lieu_passport"
               inputOptions={["Sidi bel abbes", "Oran"]}
+              value={values["lieu_passport"]}
               onChange={(e, value) => {
                 setFieldValue(
                   "lieu_passport",
-                  value !== null ? `${value}` : `${values["lieu_passport"]}`
-                );
+                  value !== null ? value : values["lieu_passport"]
+                  );
               }}
               formikhelper={formik}
               />
               <CustomAutoComplete 
               inputId="type_visa"
               inputOptions={["travaille", "touriste"]}
+              value={values["type_visa"]}
               onChange={(e, value) => {
                 setFieldValue(
                   "type_visa",
-                  value !== null ? `${value}` : `${values["type_visa"]}`
+                  value !== null ? value : values["type_visa"]
                 );
               }}
               formikhelper={formik}
@@ -156,4 +177,4 @@ let initState = {
   );
 };
 
-export default AddApplicationForm;
+export default ApplicationForm;

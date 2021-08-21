@@ -19,7 +19,7 @@ export const CustomAutoComplete = styled(({...props})=>(
       getOptionLabel={(option) => option}
       options={props.inputOptions}
       renderInput={(params) => <TextField {...params} variant="outlined"
-        value={props.formikhelper.values[props.inputId]}
+        // value={props.formikhelper.values[props.inputId]}
         // errorhandler={props.formikhelper.touched[props.inputId] && Boolean(props.formikhelper.errors[props.inputId])}
         helperText={props.formikhelper.touched[props.inputId] && props.formikhelper.errors[props.inputId]}
       />}
